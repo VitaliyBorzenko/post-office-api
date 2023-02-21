@@ -20,7 +20,7 @@ public class OfficeController {
     private PostDTO postDTO;
 
     @Autowired
-    private ClientDTO clientDTO;
+    private ClientResponce clientDTO;
 
     @Autowired
     private PostFeign postFeign;
@@ -54,33 +54,33 @@ public class OfficeController {
     }
 
     @GetMapping("/client/all")
-    public List<ClientDTO> getAllClients() {
+    public List<ClientResponce> getAllClients() {
         return clientFeign.getAllClients();
     }
 
     @GetMapping("/client/{clientId}")
-    public ClientDTO getClientById(@PathVariable String clientId) {
+    public ClientResponce getClientById(@PathVariable String clientId) {
         return clientFeign.getClientById(clientId);
     }
 
     @GetMapping("/client/info")
-    public List<ClientResponce> getAllClientsFullInfo() {
+    public List<PostResponce> getAllClientsFullInfo() {
 
 
-        List<ClientResponce> result = new ArrayList<>();
+        List<PostResponce> result = new ArrayList<>();
         //1.Получить информацию о всех посылках
         List<PostDTO> postList = postFeign.getAllPosts();
         for (PostDTO post : postList) {
             //2.Получить информацию по ИД
             String clientId = post.getClientId();
             String postRecipientId = post.getPostRecipientId();
-            ClientDTO client = clientFeign.getClientById(clientId);
-            ClientDTO recipient = clientFeign.getClientById(postRecipientId);
+            ClientResponce client = clientFeign.getClientById(clientId);
+            ClientResponce recipient = clientFeign.getClientById(postRecipientId);
             //3.Сопоставить информацию о клиенте и посылке
             PostResponce postResponce = new PostResponce();
             postResponce.setPostId(post.getPostId());
             postResponce.setClient(client);
-            postResponce.setReseiver(post.getPostRecipientId());
+            postResponce.setReseiver(recipient);
             postResponce.setPostItem(post.getPostItem());
             postResponce.setStatus(post.getStatus());
 
@@ -89,19 +89,4 @@ public class OfficeController {
         //4.Вывести данную информацию
         return result;
     }
-
-
-
-       /* List<ClientDTO> clientList = clientFeign.getAllClients();
-        for (ClientDTO client : clientList) {
-            String postId = client.getName();
-            PostDTO post = postFeign.getPostById(postId);
-
-            ClientResponce clientResponce = new ClientResponce();
-            clientResponce.setName(client.getName());
-            clientResponce.setSurname(client.getSurname());
-          //  clientResponce.setEmail(post);
-        result.add(clientResponce);*/
-
-
 }
