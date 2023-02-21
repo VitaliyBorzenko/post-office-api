@@ -17,5 +17,6 @@ public interface ClientFeign {
 
     @GetMapping("/client/{clientId}")
     ClientResponce getClientById(@PathVariable String clientId);
+
 }
 

@@ -1,12 +1,12 @@
-package kz.dar.academy.backend.model;
+package kz.dar.academy.backend.Controller;
 
 import kz.dar.academy.backend.feign.ClientFeign;
 import kz.dar.academy.backend.feign.PostFeign;
+import kz.dar.academy.backend.model.ClientResponce;
+import kz.dar.academy.backend.model.PostDTO;
+import kz.dar.academy.backend.model.PostResponce;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,12 +15,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/office")
 public class OfficeController {
-
-    @Autowired
-    private PostDTO postDTO;
-
-    @Autowired
-    private ClientResponce clientDTO;
 
     @Autowired
     private PostFeign postFeign;
@@ -65,7 +59,6 @@ public class OfficeController {
 
     @GetMapping("/client/info")
     public List<PostResponce> getAllClientsFullInfo() {
-
 
         List<PostResponce> result = new ArrayList<>();
         //1.Получить информацию о всех посылках
