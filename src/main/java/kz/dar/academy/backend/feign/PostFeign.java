@@ -17,4 +17,5 @@ public interface PostFeign {
 
     @GetMapping("/post/{postId}")
     PostDTO getPostById(@PathVariable String postId);
+
 }
